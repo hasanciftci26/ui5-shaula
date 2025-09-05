@@ -12,7 +12,7 @@ module.exports = function ({ log, middlewareUtil, options, resources }) {
     });
 
     return function (req, res, next) {
-        if (req.url.startsWith("/northwind")) {
+        if (req.url.startsWith("/company-management/")) {
             companyManagementProxy(req, res, next);
         } else {
             next();

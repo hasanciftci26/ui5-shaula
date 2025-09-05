@@ -19,7 +19,7 @@ export default class AnalyticalTableManager extends TableManager {
         this.getOwnerParent().setAggregation("innerTable", new AnalyticalTable());
     }
 
-    public async createColumns() {
+    public async configureTable() {
 
     }
 

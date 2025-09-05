@@ -19,7 +19,7 @@ export default class ResponsiveTableManager extends TableManager {
         this.getOwnerParent().setAggregation("innerTable", new Table());
     }
 
-    public async createColumns() {
+    public async configureTable() {
 
     }
 }

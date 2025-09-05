@@ -12,7 +12,7 @@
         title="UI5 Shaula Test Application"
     >
         <content>
-            <shaulaTable:Table />
+            <shaulaTable:Table entitySet="Employees" />
         </content>
     </Page>
 </mvc:View>

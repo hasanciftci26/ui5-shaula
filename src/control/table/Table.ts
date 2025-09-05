@@ -18,6 +18,7 @@ export default class Table extends Control {
         library: "ui5.shaula",
         defaultAggregation: "innerTable",
         properties: {
+            entitySet: { type: "string" },
             tableType: { type: "ui5.shaula.control.table.TableType", defaultValue: TableType.Table },
             initialized: { type: "boolean", visibility: "hidden" }
         },
@@ -40,7 +41,7 @@ export default class Table extends Control {
     }
 
     public override onAfterRendering() {
-        this.getTableManager().createColumns().then(() => {
+        this.getTableManager().configureTable().then(() => {
             this.setInitialized(true);
         });
     }
@@ -83,25 +84,25 @@ export default class Table extends Control {
         if (innerTable) {
             switch (true) {
                 case innerTable instanceof GridTable:
-                    this.setTableManager(new GridTableManager());
+                    this.setTableManager(new GridTableManager({ entitySet: this.getEntitySet() }));
                     break;
                 case innerTable instanceof ResponsiveTable:
-                    this.setTableManager(new ResponsiveTableManager());
+                    this.setTableManager(new ResponsiveTableManager({ entitySet: this.getEntitySet() }));
                     break;
                 case innerTable instanceof AnalyticalTable:
-                    this.setTableManager(new AnalyticalTableManager());
+                    this.setTableManager(new AnalyticalTableManager({ entitySet: this.getEntitySet() }));
                     break;
             }
         } else {
             switch (this.getTableType()) {
                 case "Table":
-                    this.setTableManager(new GridTableManager());
+                    this.setTableManager(new GridTableManager({ entitySet: this.getEntitySet() }));
                     break;
                 case "ResponsiveTable":
-                    this.setTableManager(new ResponsiveTableManager());
+                    this.setTableManager(new ResponsiveTableManager({ entitySet: this.getEntitySet() }));
                     break;
                 case "AnalyticalTable":
-                    this.setTableManager(new AnalyticalTableManager());
+                    this.setTableManager(new AnalyticalTableManager({ entitySet: this.getEntitySet() }));
                     break;
             }
         }

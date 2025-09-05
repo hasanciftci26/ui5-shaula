@@ -1,6 +1,5 @@
 /* eslint-disable semi */
 
-import Control from "sap/ui/core/Control";
 import GridTable from "sap/ui/table/Table";
 import ResponsiveTable from "sap/m/Table";
 import AnalyticalTable from "sap/ui/table/AnalyticalTable";
@@ -9,6 +8,8 @@ import { AggregationGetter, PropertyGetter, PropertySetter } from "ui5/shaula/ty
 
 declare module "ui5/shaula/control/table/Table" {
     export default interface Table {
+        getEntitySet: PropertyGetter<string>;
+        setEntitySet: PropertySetter<string>;
         getTableType: PropertyGetter<typeof TableType[keyof typeof TableType]>;
         setTableType: PropertySetter<typeof TableType[keyof typeof TableType]>;
         getInnerTable: AggregationGetter<SupportedTables | undefined>;

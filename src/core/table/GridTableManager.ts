@@ -13,13 +13,13 @@ export default class GridTableManager extends TableManager {
 
     public getTableInstance() {
         return this.getOwnerParent().getInnerTable() as Table;
-    }    
+    }
 
     public generateInnerTable() {
         this.getOwnerParent().setAggregation("innerTable", new Table());
     }
 
-    public async createColumns() {
-
+    public async configureTable() {
+        const properties = await this.getODataMetadata().extractProperties();
     }
 }
