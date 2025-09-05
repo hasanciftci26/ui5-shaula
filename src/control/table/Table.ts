@@ -8,6 +8,7 @@ import TableManager from "ui5/shaula/core/table/TableManager";
 import GridTableManager from "ui5/shaula/core/table/GridTableManager";
 import ResponsiveTableManager from "ui5/shaula/core/table/ResponsiveTableManager";
 import AnalyticalTableManager from "ui5/shaula/core/table/AnalyticalTableManager";
+import { SupportedTables } from "ui5/shaula/types/control/table/Table.types";
 
 /**
  * @namespace ui5.shaula.control.table
@@ -15,13 +16,13 @@ import AnalyticalTableManager from "ui5/shaula/core/table/AnalyticalTableManager
 export default class Table extends Control {
     static metadata: ClassMetadata = {
         library: "ui5.shaula",
-        defaultAggregation: "extension",
+        defaultAggregation: "innerTable",
         properties: {
             tableType: { type: "ui5.shaula.control.table.TableType", defaultValue: TableType.Table },
             initialized: { type: "boolean", visibility: "hidden" }
         },
         aggregations: {
-            extension: { type: "sap.ui.core.Control", multiple: false },
+            innerTable: { type: "sap.ui.core.Control", multiple: false },
             tableManager: { type: "ui5.shaula.core.table.TableManager", multiple: false, visibility: "hidden" }
         }
     };
@@ -32,7 +33,10 @@ export default class Table extends Control {
 
     public override onBeforeRendering() {
         this.initializeTableManager();
-        this.getTableManager().createTableInstance();
+
+        if (!this.getInnerTable()) {
+            this.getTableManager().generateInnerTable();
+        }
     }
 
     public override onAfterRendering() {
@@ -45,24 +49,20 @@ export default class Table extends Control {
         return this.getProperty("initialized") as boolean;
     }
 
-    public setExtension(extension: Control) {
+    public setInnerTable(innerTable: SupportedTables) {
         if (this.isInitialized()) {
             throw new Error(
-                "Setting the extension aggregation is not allowed after the control has been initialized. It can only be set during initialization."
+                "Setting the innerTable aggregation is not allowed after the control has been initialized. It can only be set during initialization."
             );
         }
 
-        if (![GridTable, ResponsiveTable, AnalyticalTable].some(tableClass => extension instanceof tableClass)) {
+        if (![GridTable, ResponsiveTable, AnalyticalTable].some(tableClass => innerTable instanceof tableClass)) {
             throw new Error(
-                "Invalid aggregation: only sap.ui.table.Table, sap.m.Table, or sap.ui.table.AnalyticalTable instances can be used as an extension."
+                "Invalid aggregation: only sap.ui.table.Table, sap.m.Table, or sap.ui.table.AnalyticalTable instances can be used as an inner table."
             );
         }
 
-        this.setAggregation("extension", extension);
-    }
-
-    public getInnerTable() {
-        return this.getTableManager().getTableInstance();
+        this.setAggregation("innerTable", innerTable);
     }
 
     private setInitialized(initialized: boolean) {
@@ -78,17 +78,17 @@ export default class Table extends Control {
     }
 
     private initializeTableManager() {
-        const extension = this.getExtension();
+        const innerTable = this.getInnerTable();
 
-        if (extension) {
+        if (innerTable) {
             switch (true) {
-                case extension instanceof GridTable:
+                case innerTable instanceof GridTable:
                     this.setTableManager(new GridTableManager());
                     break;
-                case extension instanceof ResponsiveTable:
+                case innerTable instanceof ResponsiveTable:
                     this.setTableManager(new ResponsiveTableManager());
                     break;
-                case extension instanceof AnalyticalTable:
+                case innerTable instanceof AnalyticalTable:
                     this.setTableManager(new AnalyticalTableManager());
                     break;
             }

@@ -8,31 +8,18 @@ import { ClassMetadata } from "ui5/shaula/types/global/ClassMetadata.types";
 export default class ResponsiveTableManager extends TableManager {
     static metadata: ClassMetadata = {
         library: "ui5.shaula",
-        final: true,
-        properties: {
-            tableInstance: { type: "object", visibility: "hidden" }
-        }
+        final: true
     };
 
-    public createTableInstance() {
-        const extension = this.getOwnerParent().getExtension();
-
-        if (extension) {
-            this.setTableInstance(extension as Table);
-        } else {
-            this.setTableInstance(new Table());
-        }
+    public getTableInstance() {
+        return this.getOwnerParent().getInnerTable() as Table;
     }
 
-    public getTableInstance() {
-        return this.getProperty("tableInstance") as Table;
+    public generateInnerTable() {
+        this.getOwnerParent().setAggregation("innerTable", new Table());
     }
 
     public async createColumns() {
 
-    }
-
-    private setTableInstance(tableInstance: Table) {
-        this.setProperty("tableInstance", tableInstance);
     }
 }

@@ -12,9 +12,9 @@ export default abstract class TableManager extends ManagedObject {
         abstract: true
     };
 
-    public abstract createTableInstance(): void;
-    public abstract getTableInstance(): SupportedTables;
+    public abstract generateInnerTable(): void;
     public abstract createColumns(): Promise<void>;
+    public abstract getTableInstance(): SupportedTables;
 
     protected getOwnerParent() {
         return this.getParent() as Table;

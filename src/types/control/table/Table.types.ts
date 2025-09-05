@@ -11,7 +11,7 @@ declare module "ui5/shaula/control/table/Table" {
     export default interface Table {
         getTableType: PropertyGetter<typeof TableType[keyof typeof TableType]>;
         setTableType: PropertySetter<typeof TableType[keyof typeof TableType]>;
-        getExtension: AggregationGetter<Control | undefined>;
+        getInnerTable: AggregationGetter<SupportedTables | undefined>;
     }
 }
 

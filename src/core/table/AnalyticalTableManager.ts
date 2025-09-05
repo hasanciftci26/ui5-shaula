@@ -8,31 +8,19 @@ import { ClassMetadata } from "ui5/shaula/types/global/ClassMetadata.types";
 export default class AnalyticalTableManager extends TableManager {
     static metadata: ClassMetadata = {
         library: "ui5.shaula",
-        final: true,
-        properties: {
-            tableInstance: { type: "object", visibility: "hidden" }
-        }
+        final: true
     };
 
-    public createTableInstance() {
-        const extension = this.getOwnerParent().getExtension();
-
-        if (extension) {
-            this.setTableInstance(extension as AnalyticalTable);
-        } else {
-            this.setTableInstance(new AnalyticalTable());
-        }
+    public getTableInstance() {
+        return this.getOwnerParent().getInnerTable() as AnalyticalTable;
     }
 
-    public getTableInstance() {
-        return this.getProperty("tableInstance") as AnalyticalTable;
+    public generateInnerTable() {
+        this.getOwnerParent().setAggregation("innerTable", new AnalyticalTable());
     }
 
     public async createColumns() {
 
     }
 
-    private setTableInstance(tableInstance: AnalyticalTable) {
-        this.setProperty("tableInstance", tableInstance);
-    }
 }
