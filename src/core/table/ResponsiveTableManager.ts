@@ -29,6 +29,10 @@ export default class ResponsiveTableManager extends TableManager {
         return this.getAggregation("tableInstance") as Table;
     }
 
+    public async createColumns() {
+
+    }
+
     private setTableInstance(tableInstance: Table) {
         this.setAggregation("tableInstance", tableInstance);
     }

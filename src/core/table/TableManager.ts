@@ -13,4 +13,5 @@ export default abstract class TableManager extends ManagedObject {
 
     public abstract createTableInstance(): void;
     public abstract getTableInstance(): SupportedTables;
+    public abstract createColumns(): Promise<void>;
 }

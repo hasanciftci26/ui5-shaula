@@ -29,6 +29,10 @@ export default class AnalyticalTableManager extends TableManager {
         return this.getAggregation("tableInstance") as AnalyticalTable;
     }
 
+    public async createColumns() {
+        
+    } 
+
     private setTableInstance(tableInstance: AnalyticalTable) {
         this.setAggregation("tableInstance", tableInstance);
     }

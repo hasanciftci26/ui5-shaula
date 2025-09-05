@@ -28,9 +28,13 @@ export default class Table extends Control {
     };
 
     public override init() {
+        this.setInitialized(false);
         this.initializeTableManager();
         this.getTableManager().createTableInstance();
         this.setInnerTable(this.getTableManager().getTableInstance());
+        this.getTableManager().createColumns().then(() => {
+            this.setInitialized(true);
+        });
     }
 
     public isInitialized() {
