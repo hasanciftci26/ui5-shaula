@@ -6,7 +6,7 @@ const TableType = {
     Table: "Table",
     ResponsiveTable: "ResponsiveTable",
     AnalyticalTable: "AnalyticalTable"
-};
+} as const;
 
 DataType.registerEnum("ui5.shaula.control.table.TableType", TableType);
 
