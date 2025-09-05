@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<library
+	xmlns="http://www.sap.com/sap.ui.library.xsd">
+	<name>ui5.shaula</name>
+	<version>${version}</version>
+	<vendor>Hasan Çiftçi (hasanciftcii26@gmail.com)</vendor>
+	<documentation>SAPUI5 library providing metadata-driven custom controls similar to Smart Controls, adapted for OData V4.</documentation>
+	<dependencies>
+		<dependency>
+			<libraryName>sap.ui.core</libraryName>
+		</dependency>
+		<dependency>
+			<libraryName>sap.m</libraryName>
+		</dependency>
+		<dependency>
+			<libraryName>sap.ui.table</libraryName>
+		</dependency>
+	</dependencies>
+	<appData></appData>
+</library>

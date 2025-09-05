@@ -1,0 +1,43 @@
+{
+    "name": "ui5-shaula",
+    "version": "1.0.0",
+    "description": "SAPUI5 library providing metadata-driven custom controls similar to Smart Controls, adapted for OData V4.",
+    "scripts": {
+        "build": "ui5 build --config=ui5-npm.yaml --clean-dest",
+        "prepack": "npm run build && rimraf --glob dist/**/*.d.ts.map",
+        "local-install": "npm pack && npm --prefix test run install-tgz"
+    },
+    "keywords": [
+        "sapui5",
+        "library",
+        "shaula",
+        "odata",
+        "odata-v4"
+    ],
+    "author": "hasanciftcii26@gmail.com",
+    "homepage": "https://ui5-shaula.github.io",
+    "repository": {
+        "url": "https://github.com/hasanciftci26/ui5-shaula"
+    },
+    "license": "Apache-2.0",
+    "files": [
+        "dist",
+        "ui5.yaml",
+        "LICENSE",
+        "README.md"
+    ],
+    "types": "dist/index.d.ts",
+    "devDependencies": {
+        "@eslint/eslintrc": "^3.3.1",
+        "@eslint/js": "^9.34.0",
+        "@sap-ux/eslint-plugin-fiori-tools": "^0.6.0",
+        "@sapui5/types": "1.136.7",
+        "@typescript-eslint/eslint-plugin": "^8.42.0",
+        "@typescript-eslint/parser": "^8.42.0",
+        "@ui5/cli": "^4.0.24",
+        "eslint": "^9.34.0",
+        "rimraf": "^6.0.1",
+        "typescript": "^5.9.2",
+        "ui5-tooling-transpile": "^3.9.0"
+    }
+}

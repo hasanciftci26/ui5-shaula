@@ -1,0 +1,16 @@
+specVersion: '4.0'
+type: library
+metadata:
+  name: ui5.shaula
+framework:
+  name: SAPUI5
+  version: 1.136.7
+  libraries:
+    - name: sap.ui.core
+    - name: sap.m
+    - name: sap.ui.table
+resources:
+  configuration:
+    paths:
+      src: dist/resources
+    propertiesFileSourceEncoding: UTF-8
