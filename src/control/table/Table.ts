@@ -3,7 +3,6 @@ import GridTable from "sap/ui/table/Table";
 import ResponsiveTable from "sap/m/Table";
 import AnalyticalTable from "sap/ui/table/AnalyticalTable";
 import TableType from "ui5/shaula/control/table/TableType";
-import { SupportedTables } from "ui5/shaula/types/control/table/Table.types";
 import { ClassMetadata } from "ui5/shaula/types/global/ClassMetadata.types";
 import TableManager from "ui5/shaula/core/table/TableManager";
 import GridTableManager from "ui5/shaula/core/table/GridTableManager";
@@ -16,22 +15,27 @@ import AnalyticalTableManager from "ui5/shaula/core/table/AnalyticalTableManager
 export default class Table extends Control {
     static metadata: ClassMetadata = {
         library: "ui5.shaula",
+        defaultAggregation: "extension",
         properties: {
             tableType: { type: "ui5.shaula.control.table.TableType", defaultValue: TableType.Table },
             initialized: { type: "boolean", visibility: "hidden" }
         },
         aggregations: {
             extension: { type: "sap.ui.core.Control", multiple: false },
-            innerTable: { type: "sap.ui.core.Control", multiple: false, visibility: "hidden" },
             tableManager: { type: "ui5.shaula.core.table.TableManager", multiple: false, visibility: "hidden" }
         }
     };
 
     public override init() {
         this.setInitialized(false);
+    }
+
+    public override onBeforeRendering() {
         this.initializeTableManager();
         this.getTableManager().createTableInstance();
-        this.setInnerTable(this.getTableManager().getTableInstance());
+    }
+
+    public override onAfterRendering() {
         this.getTableManager().createColumns().then(() => {
             this.setInitialized(true);
         });
@@ -58,15 +62,11 @@ export default class Table extends Control {
     }
 
     public getInnerTable() {
-        return this.getAggregation("innerTable") as SupportedTables;
+        return this.getTableManager().getTableInstance();
     }
 
     private setInitialized(initialized: boolean) {
         this.setProperty("initialized", initialized);
-    }
-
-    private setInnerTable(innerTable: SupportedTables) {
-        this.setAggregation("innerTable", innerTable);
     }
 
     private getTableManager() {

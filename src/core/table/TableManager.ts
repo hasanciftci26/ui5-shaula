@@ -1,4 +1,5 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
+import Table from "ui5/shaula/control/table/Table";
 import { SupportedTables } from "ui5/shaula/types/control/table/Table.types";
 import { ClassMetadata } from "ui5/shaula/types/global/ClassMetadata.types";
 
@@ -14,4 +15,8 @@ export default abstract class TableManager extends ManagedObject {
     public abstract createTableInstance(): void;
     public abstract getTableInstance(): SupportedTables;
     public abstract createColumns(): Promise<void>;
+
+    protected getOwnerParent() {
+        return this.getParent() as Table;
+    }
 }

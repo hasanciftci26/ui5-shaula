@@ -2,11 +2,11 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function ({ log, middlewareUtil, options, resources }) {
     const companyManagementProxy = createProxyMiddleware({
-        context: "/company-management",
+        context: "/company-management/",
         target: "http://localhost:4004",
         changeOrigin: true,
         pathRewrite: {
-            "^/company-management": "/odata/v4/company-management"
+            "^/company-management/": "/odata/v4/company-management/"
         },
         secure: false
     });

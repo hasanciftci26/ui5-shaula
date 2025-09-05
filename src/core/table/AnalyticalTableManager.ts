@@ -9,31 +9,30 @@ export default class AnalyticalTableManager extends TableManager {
     static metadata: ClassMetadata = {
         library: "ui5.shaula",
         final: true,
-        aggregations: {
-            extension: { type: "sap.ui.table.AnalyticalTable", multiple: false },
-            tableInstance: { type: "sap.ui.table.AnalyticalTable", multiple: false, visibility: "hidden" }
+        properties: {
+            tableInstance: { type: "object", visibility: "hidden" }
         }
     };
 
     public createTableInstance() {
-        const extension = this.getExtension();
+        const extension = this.getOwnerParent().getExtension();
 
         if (extension) {
-            this.setTableInstance(extension);
+            this.setTableInstance(extension as AnalyticalTable);
         } else {
             this.setTableInstance(new AnalyticalTable());
         }
     }
 
     public getTableInstance() {
-        return this.getAggregation("tableInstance") as AnalyticalTable;
+        return this.getProperty("tableInstance") as AnalyticalTable;
     }
 
     public async createColumns() {
-        
-    } 
+
+    }
 
     private setTableInstance(tableInstance: AnalyticalTable) {
-        this.setAggregation("tableInstance", tableInstance);
+        this.setProperty("tableInstance", tableInstance);
     }
 }

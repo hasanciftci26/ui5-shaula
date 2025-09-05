@@ -5,7 +5,7 @@
     "scripts": {
         "build": "ui5 build --config=ui5-npm.yaml --clean-dest",
         "prepack": "npm run build && rimraf --glob dist/**/*.d.ts.map",
-        "local-install": "npm pack && npm --prefix test run install-tgz"
+        "local-install": "npm pack && npm --prefix test/ui run install-tgz"
     },
     "keywords": [
         "sapui5",

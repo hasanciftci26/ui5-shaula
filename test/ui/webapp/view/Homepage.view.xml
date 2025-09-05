@@ -4,6 +4,7 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
+    xmlns:shaula="ui5.shaula.control.table"
 >
     <Page
         id="Homepage"
@@ -11,7 +12,24 @@
         title="UI5 Shaula Test Application"
     >
         <content>
-            <Text text="Test app" />
+            <shaula:Table>
+                <Table>
+                    <columns>
+                        <Column>
+                            <header>
+                                <Label text="First Name" />
+                            </header>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="Hasan" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </shaula:Table>
         </content>
     </Page>
 </mvc:View>
