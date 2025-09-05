@@ -9,9 +9,9 @@ export default class ResponsiveTableManager extends TableManager {
     static metadata: ClassMetadata = {
         library: "ui5.shaula",
         final: true,
-        properties: {
-            extension: { type: "sap.ui.table.AnalyticalTable" },
-            tableInstance: { type: "sap.ui.table.AnalyticalTable" }
+        aggregations: {
+            extension: { type: "sap.m.Table", multiple: false },
+            tableInstance: { type: "sap.m.Table", multiple: false, visibility: "hidden" }
         }
     };
 
@@ -23,5 +23,13 @@ export default class ResponsiveTableManager extends TableManager {
         } else {
             this.setTableInstance(new Table());
         }
+    }
+
+    public getTableInstance() {
+        return this.getAggregation("tableInstance") as Table;
+    }
+
+    private setTableInstance(tableInstance: Table) {
+        this.setAggregation("tableInstance", tableInstance);
     }
 }

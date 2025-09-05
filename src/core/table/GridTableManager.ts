@@ -9,9 +9,9 @@ export default class GridTableManager extends TableManager {
     static metadata: ClassMetadata = {
         library: "ui5.shaula",
         final: true,
-        properties: {
-            extension: { type: "sap.ui.table.Table" },
-            tableInstance: { type: "sap.ui.table.Table" }
+        aggregations: {
+            extension: { type: "sap.ui.table.Table", multiple: false },
+            tableInstance: { type: "sap.ui.table.Table", multiple: false, visibility: "hidden" }
         }
     };
 
@@ -23,5 +23,13 @@ export default class GridTableManager extends TableManager {
         } else {
             this.setTableInstance(new Table());
         }
+    }
+
+    public getTableInstance() {
+        return this.getAggregation("tableInstance") as Table;
+    }
+
+    private setTableInstance(tableInstance: Table) {
+        this.setAggregation("tableInstance", tableInstance);
     }
 }
