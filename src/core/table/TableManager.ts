@@ -23,6 +23,7 @@ export default abstract class TableManager extends ManagedObject {
     public abstract generateInnerTable(): void;
     public abstract configureTable(): Promise<void>;
     public abstract getTableInstance(): SupportedTables;
+    public abstract bindTable(): void;
 
     constructor(settings: Settings) {
         super(settings as $ManagedObjectSettings);
@@ -30,6 +31,10 @@ export default abstract class TableManager extends ManagedObject {
         this.setAggregation("metadataManager", new MetadataManager({
             entitySet: this.getEntitySet()
         }));
+    }
+
+    protected async loadEntityTypeProperties() {
+        await this.getMetadataManager().loadProperties();
     }
 
     protected getMetadataManager() {

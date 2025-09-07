@@ -20,6 +20,7 @@ export default class Table extends Control {
         properties: {
             entitySet: { type: "string" },
             tableType: { type: "ui5.shaula.control.table.TableType", defaultValue: TableType.Table },
+            enableAutoBinding: { type: "boolean", defaultValue: false },
             initialized: { type: "boolean", visibility: "hidden" }
         },
         aggregations: {
@@ -43,8 +44,15 @@ export default class Table extends Control {
     }
 
     public override onAfterRendering() {
+        this.setTableBusy();
         this.getTableManager().configureTable().then(() => {
             this.setInitialized(true);
+
+            if (this.getEnableAutoBinding()) {
+                this.getTableManager().bindTable();
+            } else {
+                this.setTableBusy(false);
+            }
         });
     }
 
@@ -68,6 +76,10 @@ export default class Table extends Control {
         this.setAggregation("innerTable", innerTable);
     }
 
+    public rebindTable() {
+        this.getTableManager().bindTable();
+    }
+
     private setInitialized(initialized: boolean) {
         this.setProperty("initialized", initialized);
     }
@@ -78,6 +90,10 @@ export default class Table extends Control {
 
     private setTableManager(tableManager: TableManager) {
         this.setAggregation("tableManager", tableManager);
+    }
+
+    private setTableBusy(busy = true) {
+        (this.getInnerTable() as SupportedTables).setBusy(busy);
     }
 
     private initializeTableManager() {

@@ -12,7 +12,10 @@
         title="UI5 Shaula Test Application"
     >
         <content>
-            <shaulaTable:Table entitySet="Employees" />
+            <shaulaTable:Table
+                entitySet="Employees"
+                enableAutoBinding="true"
+            />
         </content>
     </Page>
 </mvc:View>

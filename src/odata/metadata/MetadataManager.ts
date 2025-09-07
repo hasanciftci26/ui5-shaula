@@ -18,7 +18,8 @@ export default class MetadataManager extends ManagedObject {
         library: "ui5.shaula",
         final: true,
         properties: {
-            entitySet: { type: "string" }
+            entitySet: { type: "string" },
+            entityTypeProperties: { type: "object[]", defaultValue: [] }
         },
         aggregations: {
             annotationManager: { type: "ui5.shaula.odata.metadata.AnnotationManager", multiple: false }
@@ -61,7 +62,7 @@ export default class MetadataManager extends ManagedObject {
         return entityTypeName;
     }
 
-    public async extractProperties() {
+    public async loadProperties() {
         const entityType = await this.getEntityType();
         const selectionFields = await this.getAnnotationManager().getSelectionFields();
         const lineItems = await this.getAnnotationManager().getLineItems();
@@ -93,6 +94,7 @@ export default class MetadataManager extends ManagedObject {
             }
         }
 
+        this.setEntityTypeProperties(properties);
         return properties;
     }
 

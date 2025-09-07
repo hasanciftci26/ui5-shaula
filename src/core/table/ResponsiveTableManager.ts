@@ -22,4 +22,8 @@ export default class ResponsiveTableManager extends TableManager {
     public async configureTable() {
 
     }
+
+    public bindTable() {
+
+    }    
 }

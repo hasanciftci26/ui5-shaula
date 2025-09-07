@@ -23,4 +23,7 @@ export default class AnalyticalTableManager extends TableManager {
 
     }
 
+    public bindTable() {
+
+    }
 }

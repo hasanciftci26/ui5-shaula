@@ -12,6 +12,8 @@ declare module "ui5/shaula/control/table/Table" {
         setEntitySet: PropertySetter<string>;
         getTableType: PropertyGetter<typeof TableType[keyof typeof TableType]>;
         setTableType: PropertySetter<typeof TableType[keyof typeof TableType]>;
+        getEnableAutoBinding: PropertyGetter<boolean>;
+        setEnableAutoBinding: PropertySetter<boolean>;        
         getInnerTable: AggregationGetter<SupportedTables | undefined>;
     }
 }

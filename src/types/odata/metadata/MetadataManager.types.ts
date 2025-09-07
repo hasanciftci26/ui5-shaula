@@ -9,6 +9,8 @@ declare module "ui5/shaula/odata/metadata/MetadataManager" {
     export default interface MetadataManager {
         getEntitySet: PropertyGetter<string>;
         setEntitySet: PropertySetter<string>;
+        getEntityTypeProperties: PropertyGetter<Property[]>;
+        setEntityTypeProperties: PropertySetter<Property[]>;
         getAnnotationManager: AggregationGetter<AnnotationManager>;
         setAnnotationManager: AggregationSetter<AnnotationManager>;
     }
