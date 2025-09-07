@@ -20,10 +20,10 @@ export default abstract class TableManager extends ManagedObject {
         }
     };
 
-    public abstract generateInnerTable(): void;
+    public abstract getNewInstance(): SupportedTables;
     public abstract configureTable(): Promise<void>;
     public abstract getTableInstance(): SupportedTables;
-    public abstract bindTable(): void;
+    public abstract bindInnerTable(): void;
 
     constructor(settings: Settings) {
         super(settings as $ManagedObjectSettings);

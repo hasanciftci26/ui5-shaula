@@ -16,11 +16,17 @@ export default class GridTableManager extends TableManager {
     };
 
     public getTableInstance() {
-        return this.getOwnerParent().getInnerTable() as Table;
+        const table = this.getOwnerParent().getTable();
+
+        if (!table) {
+            throw new Error("Table is not initialized yet.");
+        }
+
+        return table as Table;
     }
 
-    public generateInnerTable() {
-        this.getOwnerParent().setAggregation("innerTable", new Table());
+    public getNewInstance() {
+        return new Table();
     }
 
     public async configureTable() {
@@ -28,9 +34,12 @@ export default class GridTableManager extends TableManager {
         this.createColumns();
     }
 
-    public bindTable() {
+    public bindInnerTable() {
         this.getTableInstance().bindRows({
             path: "/" + this.getEntitySet(),
+            parameters: {
+                $count: true
+            },
             events: {
                 dataReceived: () => {
                     this.getTableInstance().setBusy(false);

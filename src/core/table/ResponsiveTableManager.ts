@@ -12,18 +12,24 @@ export default class ResponsiveTableManager extends TableManager {
     };
 
     public getTableInstance() {
-        return this.getOwnerParent().getInnerTable() as Table;
+        const table = this.getOwnerParent().getTable();
+
+        if (!table) {
+            throw new Error("Table is not initialized yet.");
+        }
+
+        return table as Table;
     }
 
-    public generateInnerTable() {
-        this.getOwnerParent().setAggregation("innerTable", new Table());
+    public getNewInstance() {
+        return new Table();
     }
 
     public async configureTable() {
 
     }
 
-    public bindTable() {
+    public bindInnerTable() {
 
-    }    
+    }
 }

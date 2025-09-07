@@ -12,18 +12,24 @@ export default class AnalyticalTableManager extends TableManager {
     };
 
     public getTableInstance() {
-        return this.getOwnerParent().getInnerTable() as AnalyticalTable;
+        const table = this.getOwnerParent().getTable();
+
+        if (!table) {
+            throw new Error("Table is not initialized yet.");
+        }
+
+        return table as AnalyticalTable;
     }
 
-    public generateInnerTable() {
-        this.getOwnerParent().setAggregation("innerTable", new AnalyticalTable());
+    public getNewInstance() {
+        return new AnalyticalTable();
     }
 
     public async configureTable() {
 
     }
 
-    public bindTable() {
+    public bindInnerTable() {
 
     }
 }
