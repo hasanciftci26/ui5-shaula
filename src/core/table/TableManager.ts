@@ -1,6 +1,6 @@
 import ManagedObject, { $ManagedObjectSettings } from "sap/ui/base/ManagedObject";
 import Table from "ui5/shaula/control/table/Table";
-import ODataMetadata from "ui5/shaula/metadata/ODataMetadata";
+import MetadataManager from "ui5/shaula/odata/metadata/MetadataManager";
 import { SupportedTables } from "ui5/shaula/types/control/table/Table.types";
 import { Settings } from "ui5/shaula/types/core/table/TableManager.types";
 import { ClassMetadata } from "ui5/shaula/types/global/ClassMetadata.types";
@@ -16,7 +16,7 @@ export default abstract class TableManager extends ManagedObject {
             entitySet: { type: "string" }
         },
         aggregations: {
-            oDataMetadata: { type: "ui5.shaula.metadata.ODataMetadata", multiple: false, visibility: "hidden" }
+            metadataManager: { type: "ui5.shaula.odata.metadata.MetadataManager", multiple: false, visibility: "hidden" }
         }
     };
 
@@ -26,14 +26,14 @@ export default abstract class TableManager extends ManagedObject {
 
     constructor(settings: Settings) {
         super(settings as $ManagedObjectSettings);
-        
-        this.setAggregation("oDataMetadata", new ODataMetadata({
+
+        this.setAggregation("metadataManager", new MetadataManager({
             entitySet: this.getEntitySet()
         }));
     }
 
-    protected getODataMetadata() {
-        return this.getAggregation("oDataMetadata") as ODataMetadata;
+    protected getMetadataManager() {
+        return this.getAggregation("metadataManager") as MetadataManager;
     }
 
     protected getOwnerParent() {

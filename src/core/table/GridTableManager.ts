@@ -20,6 +20,7 @@ export default class GridTableManager extends TableManager {
     }
 
     public async configureTable() {
-        const properties = await this.getODataMetadata().extractProperties();
+        this.getTableInstance().setBusy(true);
+        const properties = await this.getMetadataManager().extractProperties();
     }
 }

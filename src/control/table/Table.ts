@@ -38,6 +38,8 @@ export default class Table extends Control {
         if (!this.getInnerTable()) {
             this.getTableManager().generateInnerTable();
         }
+
+        (this.getInnerTable() as SupportedTables).setBusyIndicatorDelay(0);
     }
 
     public override onAfterRendering() {

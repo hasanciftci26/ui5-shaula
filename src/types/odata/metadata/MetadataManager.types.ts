@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable semi */
 
-import { PropertyGetter, PropertySetter } from "ui5/shaula/types/global/ClassMetadata.types";
+import AnnotationManager from "ui5/shaula/odata/metadata/AnnotationManager";
+import { AggregationGetter, AggregationSetter, PropertyGetter, PropertySetter } from "ui5/shaula/types/global/ClassMetadata.types";
+import { FilterExpressionRestrictionType } from "ui5/shaula/types/odata/metadata/AnnotationManager.types";
 
-declare module "ui5/shaula/metadata/ODataMetadata" {
-    export default interface ODataMetadata {
+declare module "ui5/shaula/odata/metadata/MetadataManager" {
+    export default interface MetadataManager {
         getEntitySet: PropertyGetter<string>;
         setEntitySet: PropertySetter<string>;
+        getAnnotationManager: AggregationGetter<AnnotationManager>;
+        setAnnotationManager: AggregationSetter<AnnotationManager>;
     }
 }
 
@@ -19,27 +23,11 @@ export type Property = {
     type: EdmType;
     label: string;
     visibleInTable: boolean;
+    includeInTable: boolean;
     visibleInFilterBar: boolean;
     filterRequired: boolean;
-    filterable: boolean;
+    includeInFilterBar: boolean;
     filterExpressionRestrictionType: FilterExpressionRestrictionType;
-};
-
-export type PropertyPath = {
-    $PropertyPath: string;
-};
-
-export type LineItem = {
-    $Type: LineItemType;
-    Value: {
-        $Path: string;
-    };
-};
-
-export type FilterExpressionRestriction = {
-    $Type: "Org.OData.Capabilities.V1.FilterExpressionRestrictionType";
-    AllowedExpressions: FilterExpressionRestrictionType;
-    Property: PropertyPath;
 };
 
 export type EntityType = Record<string, EntityTypeElement>;
@@ -52,16 +40,6 @@ export type EntityTypeProperty = {
     $kind: "NavigationProperty";
     $Type: string;
 };
-
-type FilterExpressionRestrictionType =
-    "SingleValue" |
-    "SingleRange" |
-    "MultiValue" |
-    "MultiRange" |
-    "SearchExpression" |
-    "MultiRangeOrSearchExpression";
-
-type LineItemType = "com.sap.vocabularies.UI.v1.DataField";
 
 type EdmType =
     "Edm.Binary" |
