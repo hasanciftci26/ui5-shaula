@@ -24,6 +24,7 @@ export default class Table extends VBox {
             enableAutoBinding: { type: "boolean", defaultValue: false },
             header: { type: "string", defaultValue: null },
             headerLevel: { type: "sap.ui.core.TitleLevel", defaultValue: TitleLevel.Auto },
+            showRowCount: { type: "boolean", defaultValue: true },
             showTablePersonalisation: { type: "boolean", defaultValue: true },
             placeToolbarInTable: { type: "boolean", defaultValue: false },
             enableExport: { type: "boolean", defaultValue: true },

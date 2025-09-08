@@ -21,6 +21,8 @@ declare module "ui5/shaula/control/table/Table" {
         setHeader: PropertySetter<string>;
         getHeaderLevel: PropertyGetter<TitleLevel>;
         setHeaderLevel: PropertySetter<TitleLevel>;
+        getShowRowCount: PropertyGetter<boolean>;
+        setShowRowCount: PropertySetter<boolean>;        
         getShowTablePersonalization: PropertyGetter<boolean>;
         setShowTablePersonalization: PropertySetter<boolean>;
         getPlaceToolbarInTable: PropertyGetter<boolean>;
@@ -40,6 +42,7 @@ export type Settings = $VBoxSettings & {
     enableAutoBinding?: boolean;
     header?: string;
     headerLevel?: TitleLevel;
+    showRowCount?: boolean;
     showTablePersonalization?: boolean;
     placeToolbarInTable?: boolean;
     enableExport?: boolean

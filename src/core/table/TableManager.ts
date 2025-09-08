@@ -1,4 +1,5 @@
 import OverflowToolbar from "sap/m/OverflowToolbar";
+import Title from "sap/m/Title";
 import Toolbar from "sap/m/Toolbar";
 import ToolbarSpacer from "sap/m/ToolbarSpacer";
 import ManagedObject, { $ManagedObjectSettings } from "sap/ui/base/ManagedObject";
@@ -42,9 +43,10 @@ export default abstract class TableManager extends ManagedObject {
     }
 
     public configureToolbar(toolbar: Toolbar) {
+        this.addToolbarHeader(toolbar);
         this.addToolbarSpacer(toolbar);
-        this.addExportButton(toolbar);
-        this.addTablePersonalizationButton(toolbar);
+        this.addToolbarExportButton(toolbar);
+        this.addToolbarTablePersonalizationButton(toolbar);
     }
 
     protected async loadEntityTypeProperties() {
@@ -57,6 +59,19 @@ export default abstract class TableManager extends ManagedObject {
 
     protected getOwnerParent() {
         return this.getParent() as Table;
+    }
+
+    private addToolbarHeader(toolbar: Toolbar) {
+        const header = this.getOwnerParent().getHeader();
+
+        if (!header) {
+            return;
+        }
+
+        toolbar.insertContent(new Title({
+            text: header,
+            level: this.getOwnerParent().getHeaderLevel()
+        }), 0);
     }
 
     private addToolbarSpacer(toolbar: Toolbar) {
@@ -74,13 +89,13 @@ export default abstract class TableManager extends ManagedObject {
         }
     }
 
-    private addExportButton(toolbar: Toolbar) {
+    private addToolbarExportButton(toolbar: Toolbar) {
         if (!this.getOwnerParent().getEnableExport()) {
             return;
         }
     }
 
-    private addTablePersonalizationButton(toolbar: Toolbar) {
+    private addToolbarTablePersonalizationButton(toolbar: Toolbar) {
         if (!this.getOwnerParent().getShowTablePersonalization()) {
             return;
         }
