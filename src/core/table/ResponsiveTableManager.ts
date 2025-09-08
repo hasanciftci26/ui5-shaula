@@ -1,4 +1,5 @@
 import Table from "sap/m/Table";
+import Toolbar from "sap/m/Toolbar";
 import TableManager from "ui5/shaula/core/table/TableManager";
 import { ClassMetadata } from "ui5/shaula/types/global/ClassMetadata.types";
 
@@ -31,5 +32,9 @@ export default class ResponsiveTableManager extends TableManager {
 
     public bindInnerTable() {
 
+    }
+
+    public placeToolbar(toolbar: Toolbar) {
+        this.getTableInstance().setHeaderToolbar(toolbar);
     }
 }

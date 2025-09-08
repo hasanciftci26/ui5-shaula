@@ -10,6 +10,7 @@ import AnalyticalTableManager from "ui5/shaula/core/table/AnalyticalTableManager
 import { Settings, SupportedTables, TableTypeValues } from "ui5/shaula/types/control/table/Table.types";
 import VBox from "sap/m/VBox";
 import { TitleLevel } from "sap/ui/core/library";
+import Toolbar from "sap/m/Toolbar";
 
 /**
  * @namespace ui5.shaula.control.table
@@ -18,15 +19,18 @@ export default class Table extends VBox {
     static metadata: ClassMetadata = {
         library: "ui5.shaula",
         properties: {
-            entitySet: { type: "string" },
+            entitySet: { type: "string", defaultValue: null },
             tableType: { type: "ui5.shaula.control.table.TableType", defaultValue: TableType.Table },
             enableAutoBinding: { type: "boolean", defaultValue: false },
-            header: { type: "string" },
+            header: { type: "string", defaultValue: null },
             headerLevel: { type: "sap.ui.core.TitleLevel", defaultValue: TitleLevel.Auto },
             showTablePersonalisation: { type: "boolean", defaultValue: true },
+            placeToolbarInTable: { type: "boolean", defaultValue: false },
+            enableExport: { type: "boolean", defaultValue: true },
             initialized: { type: "boolean", visibility: "hidden" }
         },
         aggregations: {
+            customToolbar: { type: "sap.m.Toolbar", multiple: false },
             tableManager: { type: "ui5.shaula.core.table.TableManager", multiple: false, visibility: "hidden" }
         }
     };
@@ -34,11 +38,13 @@ export default class Table extends VBox {
         apiVersion: 2
     };
     private table?: SupportedTables;
+    private toolbar?: Toolbar;
 
     constructor(settings: Settings) {
         super(settings);
         this.setInitialized(false);
         this.initializeTableManager();
+        this.createToolbar();
 
         if (!this.table) {
             this.table = this.getTableManager().getNewInstance();
@@ -68,22 +74,6 @@ export default class Table extends VBox {
 
     public isInitialized() {
         return this.getProperty("initialized") as boolean;
-    }
-
-    public setInnerTable(innerTable: SupportedTables) {
-        if (this.isInitialized()) {
-            throw new Error(
-                "Setting the innerTable aggregation is not allowed after the control has been initialized. It can only be set during initialization."
-            );
-        }
-
-        if (![GridTable, ResponsiveTable, AnalyticalTable].some(tableClass => innerTable instanceof tableClass)) {
-            throw new Error(
-                "Invalid aggregation: only sap.ui.table.Table, sap.m.Table, or sap.ui.table.AnalyticalTable instances can be used as an inner table."
-            );
-        }
-
-        this.setAggregation("innerTable", innerTable);
     }
 
     public rebindTable() {
@@ -151,6 +141,17 @@ export default class Table extends VBox {
     private setTableBusy(busy = true) {
         if (this.table) {
             this.table.setBusy(busy);
+        }
+    }
+
+    private createToolbar() {
+        this.toolbar = this.getCustomToolbar() || this.getTableManager().getNewToolbarInstance();
+        this.getTableManager().configureToolbar(this.toolbar);
+
+        if (this.getPlaceToolbarInTable()) {
+            this.getTableManager().placeToolbar(this.toolbar);
+        } else {
+            this.insertItem(this.toolbar, 0);
         }
     }
 }

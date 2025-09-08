@@ -1,3 +1,4 @@
+import Toolbar from "sap/m/Toolbar";
 import AnalyticalTable from "sap/ui/table/AnalyticalTable";
 import TableManager from "ui5/shaula/core/table/TableManager";
 import { ClassMetadata } from "ui5/shaula/types/global/ClassMetadata.types";
@@ -31,5 +32,9 @@ export default class AnalyticalTableManager extends TableManager {
 
     public bindInnerTable() {
 
+    }
+
+    public placeToolbar(toolbar: Toolbar) {
+        this.getTableInstance().addExtension(toolbar);
     }
 }

@@ -1,3 +1,6 @@
+import OverflowToolbar from "sap/m/OverflowToolbar";
+import Toolbar from "sap/m/Toolbar";
+import ToolbarSpacer from "sap/m/ToolbarSpacer";
 import ManagedObject, { $ManagedObjectSettings } from "sap/ui/base/ManagedObject";
 import Table from "ui5/shaula/control/table/Table";
 import MetadataManager from "ui5/shaula/odata/metadata/MetadataManager";
@@ -24,6 +27,7 @@ export default abstract class TableManager extends ManagedObject {
     public abstract configureTable(): Promise<void>;
     public abstract getTableInstance(): SupportedTables;
     public abstract bindInnerTable(): void;
+    public abstract placeToolbar(toolbar: Toolbar): void;
 
     constructor(settings: Settings) {
         super(settings as $ManagedObjectSettings);
@@ -31,6 +35,16 @@ export default abstract class TableManager extends ManagedObject {
         this.setAggregation("metadataManager", new MetadataManager({
             entitySet: this.getEntitySet()
         }));
+    }
+
+    public getNewToolbarInstance() {
+        return new OverflowToolbar();
+    }
+
+    public configureToolbar(toolbar: Toolbar) {
+        this.addToolbarSpacer(toolbar);
+        this.addExportButton(toolbar);
+        this.addTablePersonalizationButton(toolbar);
     }
 
     protected async loadEntityTypeProperties() {
@@ -43,5 +57,32 @@ export default abstract class TableManager extends ManagedObject {
 
     protected getOwnerParent() {
         return this.getParent() as Table;
+    }
+
+    private addToolbarSpacer(toolbar: Toolbar) {
+        let hasSpacer = false;
+
+        for (const control of toolbar.getContent()) {
+            if (control instanceof ToolbarSpacer) {
+                hasSpacer = true;
+                break;
+            }
+        }
+
+        if (!hasSpacer) {
+            toolbar.addContent(new ToolbarSpacer());
+        }
+    }
+
+    private addExportButton(toolbar: Toolbar) {
+        if (!this.getOwnerParent().getEnableExport()) {
+            return;
+        }
+    }
+
+    private addTablePersonalizationButton(toolbar: Toolbar) {
+        if (!this.getOwnerParent().getShowTablePersonalization()) {
+            return;
+        }
     }
 }

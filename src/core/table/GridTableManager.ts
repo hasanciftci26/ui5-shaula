@@ -1,5 +1,6 @@
 import Label from "sap/m/Label";
 import Text from "sap/m/Text";
+import Toolbar from "sap/m/Toolbar";
 import Column from "sap/ui/table/Column";
 import Table from "sap/ui/table/Table";
 import TableManager from "ui5/shaula/core/table/TableManager";
@@ -47,6 +48,10 @@ export default class GridTableManager extends TableManager {
             }
         });
     }
+
+    public placeToolbar(toolbar: Toolbar) {
+        this.getTableInstance().addExtension(toolbar);
+    }    
 
     private createColumns() {
         for (const property of this.getMetadataManager().getEntityTypeProperties()) {
