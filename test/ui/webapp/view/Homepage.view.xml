@@ -15,7 +15,14 @@
             <shaulaTable:Table
                 entitySet="Employees"
                 enableAutoBinding="true"
-            />
+            >
+                <shaulaTable:customToolbar>
+                    <OverflowToolbar>
+                        <ToolbarSpacer />
+                        <Button text="My cilgin button" />
+                    </OverflowToolbar>
+                </shaulaTable:customToolbar>
+            </shaulaTable:Table>
         </content>
     </Page>
 </mvc:View>

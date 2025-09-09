@@ -62,6 +62,7 @@ export default class Table extends VBox {
             return;
         }
 
+        this.getTableManager().configureToolbar(this.toolbar as Toolbar);
         this.getTableManager().configureTable().then(() => {
             this.setInitialized(true);
 
@@ -147,7 +148,6 @@ export default class Table extends VBox {
 
     private createToolbar() {
         this.toolbar = this.getCustomToolbar() || this.getTableManager().getNewToolbarInstance();
-        this.getTableManager().configureToolbar(this.toolbar);
 
         if (this.getPlaceToolbarInTable()) {
             this.getTableManager().placeToolbar(this.toolbar);
